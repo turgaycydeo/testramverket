@@ -1,3 +1,5 @@
+import sys
+
 from playwright.sync_api import sync_playwright
 
 from src.features.pages.add_book_page import AddBookPage
@@ -8,6 +10,10 @@ from src.features.pages.stats_page import StatsPage
 
 
 def before_all(context):
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8")
+
     headless = context.config.userdata.getbool("headless", True)
 
     context.playwright = sync_playwright().start()

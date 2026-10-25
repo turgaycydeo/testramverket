@@ -84,13 +84,6 @@ behave -D headless=false  # E2E-tester med synlig webbläsare
 flake8 src tests conftest.py
 ```
 
-**Windows:** om ett E2E-test misslyckas kan behave krascha med `UnicodeEncodeError` när felmeddelandet skrivs ut (sidan innehåller emoji). Sätt UTF-8-läge i terminalen innan du kör behave:
-
-```bash
-$env:PYTHONUTF8=1         # PowerShell
-set PYTHONUTF8=1          # cmd
-```
-
 ## CI
 
 GitHub Actions kör flake8, enhetstester, integrationstester och E2E-tester (headless Chromium) vid varje push och pull request till `main`.
