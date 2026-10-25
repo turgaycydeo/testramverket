@@ -1,8 +1,8 @@
 # Läslistan – testautomatisering
 
-Examination i kursen Testautomatisering och testverktyg (TAP VT26D).
 
-Projektet testar webbsidan [Läslistan](https://tap-vt26-testautomatisering.github.io/exam/) med Python, pytest, behave och Playwright.
+
+Testramverket utför testning av hemsidan [Läslistan](https://tap-vt26-testautomatisering.github.io/exam/) med Python, pytest, BDD och Playwright.
 
 ## Vad har testats?
 
@@ -12,8 +12,7 @@ Python-klasser som hanterar listan med böcker, i `src/`:
 - `book_store.py` – `BookStore` med `addBook(author, title)` och `toggleFavorite(book_id)`
 - `fav_books.py` – `FavoriteBooks` med `add(book)` och `remove(book)`
 
-| Testtyp | Mapp | Vad testas |
-|---|---|---|
+
 | Enhetstest | `tests/unit/` | Varje klass för sig. I testerna av `BookStore` är `FavoriteBooks` utbytt mot en mock (pytest-mock). |
 | Integrationstest | `tests/integration/` | `BookStore` och `FavoriteBooks` tillsammans, utan mockning. |
 
@@ -30,7 +29,7 @@ User stories finns i [STORIES.md](STORIES.md). Varje story har en feature-fil i 
 | `favorites.feature` | Mina böcker: tomt meddelande, listan följer markeringarna |
 | `statistics.feature` | Antal böcker och antal hjärtmarkerade böcker |
 
-Testerna använder designmönstret **Page Object** (`src/features/pages/`), **Scenario Outline** och appens `data-testid`-attribut.
+Ramverket använder designmönstret **Page Object Model** (`src/features/pages/`), **Scenario Outline** och appens `data-testid`-attribut.
 
 ## Projektstruktur
 
