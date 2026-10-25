@@ -1,31 +1,26 @@
-# Teorifrågor
+Teorifrågor
+1. Vad är skillnaden mellan enhetstest, integrationstest, regressionstest och prestandatest?
+Ett enhetstest testar en liten del av koden isolerat, oftast en metod eller en klass. Om klassen är beroende av något annat ersätter man beroendet med en mock eller fake, så att det bara är själva enheten som testas. I mitt projekt testar jag till exempel BookStore med en mockad FavoriteBooks.
 
-## 1. Vad är skillnaden mellan enhetstest, integrationstest, regressionstest och prestandatest?
+Ett integrationstest kontrollerar att flera delar fungerar ihop och att data skickas mellan dem på rätt sätt. Här använder man de riktiga klasserna, till exempel när jag testar att en bok hamnar i FavoriteBooks när man kör toggleFavorite i BookStore.
 
-Ett enhetstest testar en liten del av koden för sig själv, oftast en metod eller en klass. Om klassen är beroende av något annat byter man ut det mot en mock eller fake så att det bara är just den delen som testas. I mitt projekt testar jag t.ex. BookStore med en mockad FavoriteBooks.
+Ett regressionstest ser till att saker som fungerade tidigare inte går sönder när man lägger till ny kod. Det är egentligen ingen egen typ av test, utan snarare ett syfte med testerna. Alla tester som man sparar och kör igen blir med tiden regressionstester. Ofta skriver man också ett nytt test när man hittat en bugg, så att samma fel inte kommer tillbaka.
 
-Ett integrationstest testar att flera delar fungerar ihop och skickar data mellan sig på rätt sätt. Där använder man de riktiga klasserna, som när jag testar att en bok hamnar i FavoriteBooks när man kör toggleFavorite i BookStore.
+Ett prestandatest mäter hur snabbt och stabilt systemet är, till exempel körtid, svarstid och resursanvändning. Det blir särskilt viktigt när datamängden eller belastningen ökar. I kursen använde vi pytest-benchmark för att jämföra olika versioner av en funktion.
 
-Ett regressionstest ska se till att saker som fungerade innan inte går sönder när man lägger till ny kod. Det är egentligen inte en egen sorts test, det handlar mer om varför testet finns. Alla tester man sparar och kör igen blir regressionstester efter ett tag, och ofta skriver man ett nytt test när man har hittat en bugg så att den inte kommer tillbaka.
+2. Beskriv hur det går till när man arbetar med TDD.
+När man arbetar med TDD skriver man testet innan koden. Först skriver man ett test för något som ännu inte finns och kör det – då ska testet bli rött. Därefter skriver man så lite kod som möjligt för att få testet grönt. När testet är grönt städar man upp och förbättrar koden, vilket kallas refactor, och kör testerna igen för att säkerställa att allt fortfarande fungerar. Sedan tar man nästa lilla krav och upprepar processen: red, green, refactor.
 
-Ett prestandatest mäter hur snabbt och stabilt systemet är, t.ex. körtid, svarstid och hur mycket resurser det tar, särskilt när datamängden eller belastningen ökar. I kursen använde vi pytest-benchmark för att jämföra olika versioner av en funktion.
+Fördelen är att man hela tiden vet att koden gör det den ska, och att man tänker igenom kraven innan man börjar koda.
 
-## 2. Beskriv hur det går till när man arbetar med TDD.
+3. Beskriv hur BDD skiljer sig från TDD.
+BDD bygger på TDD, men fokuserar mer på hur systemet ska bete sig för användaren än på enskilda funktioner. Testerna skrivs på nästan vanligt språk med Gherkin – Given, When, Then – i feature-filer. Det gör att även kunden och personer som inte programmerar kan läsa och bidra till testerna. Varje mening kopplas sedan till kod i step-filer, i vårt fall med behave.
 
-Man skriver testet innan koden. Först skriver man ett test för något som inte finns än och kör det, då ska det bli rött. Sedan skriver man så lite kod som möjligt för att få testet grönt. När det är grönt kan man städa upp och förbättra koden (refactor) och köra testerna igen för att se att allt fortfarande fungerar. Sen tar man nästa lilla krav och gör samma sak igen. Red, green, refactor.
+TDD är mer riktat mot utvecklaren och handlar om små kodenheter, medan BDD skapar ett gemensamt språk för hela teamet och utgår från verkliga behov. I båda fallen skrivs testerna innan koden.
 
-Fördelen är att man hela tiden vet att koden gör det den ska och att man tänker igenom kraven innan man börjar koda.
+4. Vilka sorters tester skulle du vilja använda för en webbsida som liknar Läslistan?
+För backend skulle jag använda enhetstester för alla klasser och metoder, eftersom de är snabba och visar exakt var ett fel finns. Jag skulle också ha integrationstester för de delar som arbetar ihop, till exempel katalogen och favoritlistan, samt mot databasen om det finns en.
 
-## 3. Beskriv hur BDD skiljer sig från TDD.
+För frontend skulle jag använda BDD med behave och Playwright. Då kan user stories direkt omvandlas till tester, och feature-filerna kan visas för beställaren. E2E-testerna visar att hela flödet fungerar som när en riktig användare använder sidan. Eftersom de är långsammare skulle jag inte testa varje detalj där, utan fokusera på de viktigaste användarflödena.
 
-BDD bygger på TDD men fokuserar mer på hur systemet ska bete sig för användaren än på enskilda funktioner. Testerna skrivs på nästan vanligt språk med Gherkin (Given, When, Then) i feature-filer, så att även kunden och andra som inte programmerar kan läsa dem och vara med och skriva dem. Sen kopplas varje mening till kod i step-filer, i vårt fall med behave.
-
-TDD är mer för utvecklaren och handlar om små kodenheter, medan BDD handlar om ett gemensamt språk för hela teamet och att lösa verkliga behov. Testerna skrivs fortfarande innan koden i båda.
-
-## 4. Tänk dig att du skulle göra en webbsida som liknar Läslistan, både frontend och backend. Om du fick välja förutsättningslöst, vilka sorters tester skulle du vilja använda? Motivera ditt val.
-
-För backend skulle jag använda enhetstester för alla klasser och metoder, eftersom de är snabba och visar exakt var felet är. Jag skulle också ha integrationstester för de delar som jobbar ihop, t.ex. katalogen och favoritlistan, och mot databasen om det fanns en.
-
-För frontend skulle jag använda BDD med behave och Playwright. Då blir user stories direkt till tester och det går att visa feature-filerna för beställaren. E2E-testerna visar att hela flödet fungerar som en riktig användare skulle använda sidan. De är långsammare, så jag skulle inte ha med varenda detalj där utan fokusera på de viktigaste flödena.
-
-Alla tester skulle köras i CI vid varje push så att man upptäcker regressioner direkt. Om sidan växer och får fler användare, som de planerar med quiz och diskussioner, skulle jag också lägga till prestandatester för att se att den klarar större listor och fler användare samtidigt.
+Alla tester skulle köras i CI vid varje push, så att regressioner upptäcks direkt. Om sidan växer och får fler användare, till exempel med quiz och diskussioner som planeras, skulle jag också lägga till prestandatester för att säkerställa att den klarar större listor och fler användare samtidigt.
